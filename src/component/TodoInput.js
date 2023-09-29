@@ -8,7 +8,8 @@ const TodoInput = ({ value, onChange, onAdd }) => {
   return (
     <InputGroup className="mb-3">
       <FormControl
-        placeholder="add item . . . "
+          style={{fontFamily:"cursive",fontSize:"30px",fontWeight:"bolder"}}
+        placeholder="Add your things here... "
         size="lg"
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -16,12 +17,8 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         aria-describedby="basic-addon2"
       />
       <InputGroup>
-        <Button
-          variant="dark"
-          className="mt-2"
-          onClick={() => onAdd()}
-        >
-          ADD
+        <Button variant="dark" className="mt-2" onClick={() => onAdd()}>
+          ADD THINGS
         </Button>
       </InputGroup>
     </InputGroup>

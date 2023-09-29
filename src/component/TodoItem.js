@@ -13,11 +13,21 @@ const TodoItem = ({ item, onDelete, onEdit }) => {
         justifyContent: "space-between",
       }}
     >
-      <input value="test" type="checkbox"/> 
+      <input value="test" type="checkbox" />
       {item.value}
       <span>
-        <Button style={{ marginRight: "10px" }} variant="light" onClick={() => onDelete(item.id)}> Delete </Button>
-        <Button variant="light" onClick={() => onEdit(item.id)}> Edit </Button>
+        <Button
+          style={{ marginRight: "10px" }}
+          variant="light"
+          onClick={() => onDelete(item.id)}
+        >
+          {" "}
+          Delete{" "}
+        </Button>
+        <Button variant="light" onClick={() => onEdit(item.id)}>
+          {" "}
+          Edit{" "}
+        </Button>
       </span>
     </ListGroup.Item>
   );

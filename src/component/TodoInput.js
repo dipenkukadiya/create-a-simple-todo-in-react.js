@@ -8,7 +8,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
   return (
     <InputGroup className="mb-3">
       <FormControl
-          style={{fontFamily:"cursive",fontSize:"30px",fontWeight:"bolder"}}
+          style={{fontFamily:"cursive",fontWeight:"bolder"}}
         placeholder="Add your things here... "
         size="lg"
         value={value}

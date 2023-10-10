@@ -23,10 +23,20 @@ class App extends Component {
       userInput: value,
     });
   }
+
+  updateLocalStorage = (list) => {
+    localStorage.setItem("todos", JSON.stringify(list));
+  };
+
   async componentDidMount() {
     try {
-      const todos = await getAllTodos();
-      this.setState({ list: todos });
+      const localStoragetodos = localStorage.getItem("todos");
+      if (localStoragetodos) {
+        this.setState({ list: JSON.parse(localStoragetodos) });
+      } else {
+        const todos = await getAllTodos();
+        this.setState({ list: todos });
+      }
     } catch (error) {
       console.error("Error initializing IndexedDB: ", error);
     }
@@ -42,6 +52,7 @@ class App extends Component {
         await addTodo(userInput);
         const todos = await getAllTodos();
         this.setState({ list: todos, userInput: "" });
+        this.updateLocalStorage(todos);
       } catch (error) {
         console.error("Error adding todo to IndexedDB: ", error);
       }
@@ -58,9 +69,8 @@ class App extends Component {
 
   deleteItem(id) {
     const list = this.state.list.filter((item) => item.id !== id);
-    this.setState({
-      list,
-    });
+    this.setState({ list });
+    this.updateLocalStorage(list);
   }
 
   editItem(id) {
@@ -76,9 +86,9 @@ class App extends Component {
       this.setState({
         list: updatedList,
       });
+      this.updateLocalStorage(updatedList);
     }
   }
-
   render() {
     return (
       <Container>

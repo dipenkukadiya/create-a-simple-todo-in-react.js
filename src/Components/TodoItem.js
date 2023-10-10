@@ -3,27 +3,29 @@ import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
-function TodoItem({ item, onDelete, onEdit}) {
+function TodoItem({ item, onDelete, onEdit }) {
   const [completed, setCompleted] = useState(false);
   const handleCheckboxChange = () => {
     setCompleted(!completed);
     // onCheckboxChange(item.id, !completed);
   };
 
-
   return (
     <ListGroup.Item
-      variant={completed?"success":"dark"}
+      variant={completed ? "success" : "dark"}
       action
       style={{
         display: "flex",
         justifyContent: "space-between",
-        textDecoration : completed ? "line-through" :"none",
+        textDecoration: completed ? "line-through" : "none",
       }}
     >
-
-      <input value="test" type="checkbox" checked={completed} onChange= {handleCheckboxChange}/>
-     
+      <input
+        value="test"
+        type="checkbox"
+        checked={completed}
+        onChange={handleCheckboxChange}
+      />
 
       {item.value}
       <span>
@@ -42,6 +44,6 @@ function TodoItem({ item, onDelete, onEdit}) {
       </span>
     </ListGroup.Item>
   );
-};
+}
 
 export default TodoItem;

@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 const TodoInput = ({ value, onChange, onAdd }) => {
   return (
     <div className="mb-3">
-      <input 
+      <input
         className="form-control-lg"
         style={{ fontFamily: "cursive", fontWeight: "bolder" }}
         placeholder="Add your things here... "
@@ -15,7 +15,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label="add something"
-        aria-describedby ="basic-addon2"
+        aria-describedby="basic-addon2"
       />
       <InputGroup>
         <Button variant="dark" className="mt-2" onClick={() => onAdd()}>

@@ -1,19 +1,30 @@
 // TodoItem.js
-import React from "react";
+import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
-const TodoItem = ({ item, onDelete, onEdit }) => {
+function TodoItem({ item, onDelete, onEdit}) {
+  const [completed, setCompleted] = useState(false);
+  const handleCheckboxChange = () => {
+    setCompleted(!completed);
+    // onCheckboxChange(item.id, !completed);
+  };
+
+
   return (
     <ListGroup.Item
-      variant="dark"
+      variant={completed?"success":"dark"}
       action
       style={{
         display: "flex",
         justifyContent: "space-between",
+        textDecoration : completed ? "line-through" :"none",
       }}
     >
-      <input value="test" type="checkbox" />
+
+      <input value="test" type="checkbox" checked={completed} onChange= {handleCheckboxChange}/>
+     
+
       {item.value}
       <span>
         <Button

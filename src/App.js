@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TodoInput from "./component/TodoInput";
-import TodoItem from "./component/TodoItem";
+import TodoInput from "./Components/TodoInput";
+import TodoItem from "./Components/TodoItem";
 import ListGroup from "react-bootstrap/ListGroup";
-import { addTodo, getAllTodos } from './index_database/indexedDB';
+import { addTodo, getAllTodos } from "./Database/indexedDB";
 
 class App extends Component {
   constructor(props) {
@@ -89,8 +89,8 @@ class App extends Component {
             alignItems: "center",
             fontSize: "3rem",
             fontWeight: "bolder",
-            fontFamily:"cursive",
-            color:"green",
+            fontFamily: "cursive",
+            color: "green",
           }}
         >
           TODO THINGS

@@ -17,17 +17,22 @@ function TodoItem({ item, onDelete, onEdit }) {
       style={{
         display: "flex",
         justifyContent: "space-between",
+        marginTop:"10px",
         textDecoration: completed ? "line-through" : "none",
       }}
     >
       <input
-        value="test"
+      className="form-check"
+        value=""
+        id="flexCheckChecked"
         type="checkbox"
         checked={completed}
         onChange={handleCheckboxChange}
+        style={{ marginTop: "8px" }}
+        
       />
-
-      {item.value}
+      <h5 style={{marginTop:"8px"}}>{item.value}</h5>
+         
       <span>
         <Button
           style={{ marginRight: "10px" }}

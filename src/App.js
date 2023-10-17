@@ -26,6 +26,7 @@ class App extends Component {
 
   updateLocalStorage = (list) => {
     localStorage.setItem("todos", JSON.stringify(list));
+    console.log("local storage updated :",list)
   };
 
   async componentDidMount() {
@@ -33,9 +34,16 @@ class App extends Component {
       const localStoragetodos = localStorage.getItem("todos");
       if (localStoragetodos) {
         this.setState({ list: JSON.parse(localStoragetodos) });
+      
       } else {
         const todos = await getAllTodos();
         this.setState({ list: todos });
+        if (todos.length === 0) {
+          // Clear local storage
+          localStorage.removeItem("todos");
+          // Reset state
+          this.setState({ list: [] });
+        }
       }
     } catch (error) {
       console.error("Error initializing IndexedDB: ", error);
@@ -47,6 +55,7 @@ class App extends Component {
       const userInput = {
         id: Math.random(),
         value: this.state.userInput,
+        checked:false,
       };
       try {
         await addTodo(userInput);
@@ -66,7 +75,16 @@ class App extends Component {
       });
     }
   }
-
+  updateCheckbox(id, checked) {
+    const updatedList = this.state.list.map((item) => {
+      if (item.id === id) {
+        return { ...item, checked };
+      }
+      return item;
+    });
+    this.setState({ list: updatedList });
+    this.updateLocalStorage(updatedList);
+  }
   deleteItem(id) {
     const list = this.state.list.filter((item) => item.id !== id);
     this.setState({ list });
@@ -89,6 +107,7 @@ class App extends Component {
       this.updateLocalStorage(updatedList);
     }
   }
+  
   render() {
     return (
       <Container>
@@ -125,6 +144,9 @@ class App extends Component {
                   item={item}
                   onDelete={this.deleteItem.bind(this)}
                   onEdit={this.editItem.bind(this)}
+                  onCheckboxChange={(checked) =>
+                    this.updateCheckbox(item.id, checked)
+                  }
                 />
               ))}
             </ListGroup>

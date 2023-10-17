@@ -21,6 +21,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         <Button variant="dark" className="mt-2" onClick={() => onAdd()}>
           ADD THINGS
         </Button>
+
       </InputGroup>
     </div>
   );

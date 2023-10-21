@@ -1,14 +1,15 @@
 // TodoInput.js
 import React from "react";
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
+// import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
 const TodoInput = ({ value, onChange, onAdd }) => {
   return (
-    <InputGroup className="mb-3">
-      <FormControl
-          style={{fontFamily:"cursive",fontWeight:"bolder"}}
+    <div className="mb-3">
+      <input
+        className="form-control-lg"
+        style={{ fontFamily: "cursive", fontWeight: "bolder" }}
         placeholder="Add your things here... "
         size="lg"
         value={value}
@@ -20,8 +21,9 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         <Button variant="dark" className="mt-2" onClick={() => onAdd()}>
           ADD THINGS
         </Button>
+
       </InputGroup>
-    </InputGroup>
+    </div>
   );
 };
 

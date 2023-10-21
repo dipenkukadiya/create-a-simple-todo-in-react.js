@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TodoInput from "./component/TodoInput";
-import TodoItem from "./component/TodoItem";
+import TodoInput from "./Components/TodoInput";
+import TodoItem from "./Components/TodoItem";
 import ListGroup from "react-bootstrap/ListGroup";
-import { addTodo, getAllTodos } from './index_database/indexedDB';
+import { addTodo, getAllTodos } from "./Database/indexedDB";
 
 class App extends Component {
   constructor(props) {
@@ -23,10 +23,28 @@ class App extends Component {
       userInput: value,
     });
   }
+
+  updateLocalStorage = (list) => {
+    localStorage.setItem("todos", JSON.stringify(list));
+    console.log("local storage updated :",list)
+  };
+
   async componentDidMount() {
     try {
-      const todos = await getAllTodos();
-      this.setState({ list: todos });
+      const localStoragetodos = localStorage.getItem("todos");
+      if (localStoragetodos) {
+        this.setState({ list: JSON.parse(localStoragetodos) });
+      
+      } else {
+        const todos = await getAllTodos();
+        this.setState({ list: todos });
+        if (todos.length === 0) {
+          // Clear local storage
+          localStorage.removeItem("todos");
+          // Reset state
+          this.setState({ list: [] });
+        }
+      }
     } catch (error) {
       console.error("Error initializing IndexedDB: ", error);
     }
@@ -37,11 +55,13 @@ class App extends Component {
       const userInput = {
         id: Math.random(),
         value: this.state.userInput,
+        checked:false,
       };
       try {
         await addTodo(userInput);
         const todos = await getAllTodos();
         this.setState({ list: todos, userInput: "" });
+        this.updateLocalStorage(todos);
       } catch (error) {
         console.error("Error adding todo to IndexedDB: ", error);
       }
@@ -55,12 +75,20 @@ class App extends Component {
       });
     }
   }
-
+  updateCheckbox(id, checked) {
+    const updatedList = this.state.list.map((item) => {
+      if (item.id === id) {
+        return { ...item, checked };
+      }
+      return item;
+    });
+    this.setState({ list: updatedList });
+    this.updateLocalStorage(updatedList);
+  }
   deleteItem(id) {
     const list = this.state.list.filter((item) => item.id !== id);
-    this.setState({
-      list,
-    });
+    this.setState({ list });
+    this.updateLocalStorage(list);
   }
 
   editItem(id) {
@@ -76,9 +104,10 @@ class App extends Component {
       this.setState({
         list: updatedList,
       });
+      this.updateLocalStorage(updatedList);
     }
   }
-
+  
   render() {
     return (
       <Container>
@@ -89,8 +118,8 @@ class App extends Component {
             alignItems: "center",
             fontSize: "3rem",
             fontWeight: "bolder",
-            fontFamily:"cursive",
-            color:"green",
+            fontFamily: "cursive",
+            color: "green",
           }}
         >
           TODO THINGS
@@ -115,6 +144,9 @@ class App extends Component {
                   item={item}
                   onDelete={this.deleteItem.bind(this)}
                   onEdit={this.editItem.bind(this)}
+                  onCheckboxChange={(checked) =>
+                    this.updateCheckbox(item.id, checked)
+                  }
                 />
               ))}
             </ListGroup>

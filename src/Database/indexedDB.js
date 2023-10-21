@@ -1,6 +1,6 @@
 // indexedDB.js
-const DB_NAME = 'todoDB';
-const TODO_STORE = 'todos';
+const DB_NAME = "todoDB";
+const TODO_STORE = "todos";
 
 const openDB = () => {
   return new Promise((resolve, reject) => {
@@ -9,7 +9,10 @@ const openDB = () => {
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains(TODO_STORE)) {
-        db.createObjectStore(TODO_STORE, { keyPath: 'id', autoIncrement: true });
+        db.createObjectStore(TODO_STORE, {
+          keyPath: "id",
+          autoIncrement: true,
+        });
       }
     };
 
@@ -27,7 +30,7 @@ const openDB = () => {
 const addTodo = (todo) => {
   return new Promise(async (resolve, reject) => {
     const db = await openDB();
-    const transaction = db.transaction([TODO_STORE], 'readwrite');
+    const transaction = db.transaction([TODO_STORE], "readwrite");
     const store = transaction.objectStore(TODO_STORE);
 
     transaction.oncomplete = () => {
@@ -45,7 +48,7 @@ const addTodo = (todo) => {
 const getAllTodos = () => {
   return new Promise(async (resolve, reject) => {
     const db = await openDB();
-    const transaction = db.transaction([TODO_STORE], 'readonly');
+    const transaction = db.transaction([TODO_STORE], "readonly");
     const store = transaction.objectStore(TODO_STORE);
 
     const request = store.getAll();

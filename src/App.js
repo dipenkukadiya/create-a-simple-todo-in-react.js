@@ -12,10 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userInput: "",
-      list: [],
-    };
+    this.state = {userInput:"" , list:[]};
   }
 
   updateInput(value) {

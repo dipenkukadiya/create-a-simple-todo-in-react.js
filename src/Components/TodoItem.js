@@ -11,7 +11,7 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
         display: "flex",
         justifyContent: "space-between",
         marginTop: "10px",
-        textDecoration: item.checked ? "line-through" : "none",
+        textDecoration: item.checked ? "strike-through" : "none",
       }}
     >
       <input

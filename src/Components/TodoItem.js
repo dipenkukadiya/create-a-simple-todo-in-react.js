@@ -3,71 +3,67 @@ import Button from "react-bootstrap/Button";
 import React, { useState } from "react"; // Importing 'useState' from 'react'
 import TodoModal from "./TodoModal";
 
-
 function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
   const [showModal, setShowModal] = useState(false);
- 
 
   const handleEditClick = () => {
-    // Toggle the modal when the "Edit" button is clicked
     setShowModal(true);
   };
 
   const handleClose = () => {
-    // Close the modal
     setShowModal(false);
   };
   return (
-  <div>
-    <ListGroup.Item
-      variant={item.checked ? "success" : "dark"}
-      action
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginTop: "10px",
-        textDecoration: item.checked ? "strike-through" : "none",
-      }}
-    >
-      <input
-        className="form-check"
-        value=""
-        type="checkbox"
-        checked={item.checked}
-        onChange={(e) => onCheckboxChange(e.target.checked)}
-        style={{ marginTop: "8px" }}
-      />
-      <h5
+    <div>
+      <ListGroup.Item
+        variant={item.checked ? "success" : "dark"}
+        action
         style={{
-          marginTop: "8px",
-          textDecoration: item.checked ? "line-through" : "none",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
+          textDecoration: item.checked ? "strike-through" : "none",
         }}
       >
-        {item.value}
-      </h5>
-
-      <div>
-        <Button
-          style={{ marginRight: "10px" }}
-          variant="light"
-          onClick={() => onDelete(item.id)}
+        <input
+          className="form-check"
+          value=""
+          type="checkbox"
+          checked={item.checked}
+          onChange={(e) => onCheckboxChange(e.target.checked)}
+          style={{ marginTop: "8px" }}
+        />
+        <h5
+          style={{
+            marginTop: "8px",
+            textDecoration: item.checked ? "line-through" : "none",
+          }}
         >
-          {" "}
-          Delete{" "}
-        </Button>
-        <Button variant="light" onClick={handleEditClick}>
-          {" "}
-          Edit{" " }
-        </Button>
-      </div>
-    </ListGroup.Item>
+          {item.value}
+        </h5>
+
+        <div>
+          <Button
+            style={{ marginRight: "10px" }}
+            variant="light"
+            onClick={() => onDelete(item.id)}
+          >
+            {" "}
+            Delete{" "}
+          </Button>
+          <Button variant="light" onClick={handleEditClick}>
+            {" "}
+            Edit{" "}
+          </Button>
+        </div>
+      </ListGroup.Item>
       <TodoModal
-      show={showModal}
-      item={item}
-      onClose={handleClose}
-      onEdit={onEdit}
-      onDelete={onDelete}
-    />
+        show={showModal}
+        item={item}
+        onClose={handleClose}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </div>
   );
 }

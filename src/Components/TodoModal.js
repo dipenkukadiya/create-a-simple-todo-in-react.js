@@ -3,11 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 class TodoModal extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
-      editedValue:props.item.value,
+      editedValue: props.item.value,
     };
   }
 
@@ -48,9 +47,9 @@ class TodoModal extends Component {
           <Button variant="primary" onClick={this.handleSave}>
             Save Changes
           </Button>
-          {/* <Button variant="danger" onClick={this.handleDelete}>
+          <Button variant="danger" onClick={this.handleDelete}>
             Delete
-          </Button> */}
+          </Button>
         </Modal.Footer>
       </Modal>
     );

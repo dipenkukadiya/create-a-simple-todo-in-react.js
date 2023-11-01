@@ -14,7 +14,7 @@ import { addTodo, getAllTodos } from "./Database/indexedDB";
 class App extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userInput: "",
       list: [],
@@ -24,7 +24,7 @@ class App extends Component {
       deletingItemId: null,
     };
   }
-  
+
   updateInput(value) {
     this.setState({
       userInput: value,
@@ -32,17 +32,15 @@ class App extends Component {
   }
   updateLocalStorage = (list) => {
     localStorage.setItem("todos", JSON.stringify(list));
-    console.log("local storage updated :",list)
+    console.log("local storage updated :", list);
   };
-  
 
-  
   async addItem() {
     if (this.state.userInput !== "") {
       const userInput = {
         id: Math.random(),
         value: this.state.userInput,
-        checked:false,
+        checked: false,
       };
       try {
         await addTodo(userInput);
@@ -85,13 +83,11 @@ class App extends Component {
     });
   }
   confirmDelete() {
-    // Get the ID of the item to delete
     const itemIdToDelete = this.state.deletingItemId;
-  
-    // Filter the list to exclude the item with the matching ID
-    const updatedList = this.state.list.filter((item) => item.id !== itemIdToDelete);
-  
-    // Update the state with the new list and close the delete modal
+    const updatedList = this.state.list.filter(
+      (item) => item.id !== itemIdToDelete
+    );
+
     this.setState({
       list: updatedList,
       isDeleting: false,
@@ -99,30 +95,24 @@ class App extends Component {
     });
     localStorage.removeItem(`todo_${itemIdToDelete}`);
     this.updateLocalStorage(updatedList);
-
-    // Optionally, update your storage (e.g., IndexedDB or localStorage) here
   }
   onEdit = (id, value) => {
-    // Update the item with the new value
-    // console.log("on edit triggered");
-    // console.log("Editing ID:", this.props.item.id);
-    // console.log("Edited Value:", this.state.editedValue);
-    
     const updatedList = this.state.list.map((item) => {
       if (item.id === id) {
         return { ...item, value };
       }
       return item;
     });
-  
+
     this.setState({
       list: updatedList,
-      isEditing: false, // Close the edit modal
-      editingItemId: null, // Clear the editing item
+      isEditing: false,
+      editingItemId: null,
     });
-  
+
     this.updateLocalStorage(updatedList);
   };
+
   confirmEdit() {
     const { editingItemId } = this.state;
     if (editingItemId) {
@@ -130,19 +120,19 @@ class App extends Component {
     }
     this.closeEditModal();
   }
+
   closeEditModal() {
     this.setState({
       isEditing: false,
       editingItemId: null,
     });
   }
- 
+
   async componentDidMount() {
     try {
       const localStoragetodos = localStorage.getItem("todos");
       if (localStoragetodos) {
         this.setState({ list: JSON.parse(localStoragetodos) });
-      
       } else {
         const todos = await getAllTodos();
         this.setState({ list: todos });
@@ -157,8 +147,7 @@ class App extends Component {
       console.error("Error initializing IndexedDB: ", error);
     }
   }
-  
-  
+
   render() {
     return (
       <Container>
@@ -194,7 +183,7 @@ class App extends Component {
                   key={item.id}
                   item={item}
                   onDelete={this.deleteItem.bind(this)}
-                  onEdit={(itemId, newValue) => this.onEdit(itemId,newValue)}
+                  onEdit={(itemId, newValue) => this.onEdit(itemId, newValue)}
                   onCheckboxChange={(checked) =>
                     this.updateCheckbox(item.id, checked)
                   }
@@ -203,35 +192,43 @@ class App extends Component {
             </ListGroup>
           </Col>
         </Row>
-        
+
         {this.state.isDeleting && (
-        <Modal show={this.state.isDeleting} onHide={this.closeDeleteModal.bind(this)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Deletion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Are you sure you want to delete this item?</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.closeDeleteModal.bind(this)}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={() => this.confirmDelete()}>Delete</Button>
-          </Modal.Footer>
-        </Modal>
-      )}
-     {this.state.isEditing && (
-      <TodoModal
-  show={this.state.isEditing}
-  onClose={this.closeEditModal.bind(this)}
-  item={this.state.list.find((item) => item.id === this.state.editingItemId)}
-  onEdit={(newValue) => this.onEdit(this.state.editingItemId, newValue)}
-/>
-
-
-)}
-
-
+          <Modal
+            show={this.state.isDeleting}
+            onHide={this.closeDeleteModal.bind(this)}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Deletion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to delete this item?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={this.closeDeleteModal.bind(this)}
+              >
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => this.confirmDelete()}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+        {this.state.isEditing && (
+          <TodoModal
+            show={this.state.isEditing}
+            onClose={this.closeEditModal.bind(this)}
+            item={this.state.list.find(
+              (item) => item.id === this.state.editingItemId
+            )}
+            onEdit={(newValue) =>
+              this.onEdit(this.state.editingItemId, newValue)
+            }
+          />
+        )}
       </Container>
     );
   }

@@ -1,8 +1,24 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
+import React, { useState } from "react"; // Importing 'useState' from 'react'
+import TodoModal from "./TodoModal";
+
 
 function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
+  const [showModal, setShowModal] = useState(false);
+ 
+
+  const handleEditClick = () => {
+    // Toggle the modal when the "Edit" button is clicked
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    // Close the modal
+    setShowModal(false);
+  };
   return (
+  <div>
     <ListGroup.Item
       variant={item.checked ? "success" : "dark"}
       action
@@ -10,7 +26,7 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
         display: "flex",
         justifyContent: "space-between",
         marginTop: "10px",
-        textDecoration: item.checked ? "line-through" : "none",
+        textDecoration: item.checked ? "strike-through" : "none",
       }}
     >
       <input
@@ -39,12 +55,20 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
           {" "}
           Delete{" "}
         </Button>
-        <Button variant="light" onClick={() => onEdit(item.id)}>
+        <Button variant="light" onClick={handleEditClick}>
           {" "}
-          Edit{" "}
+          Edit{" " }
         </Button>
       </div>
     </ListGroup.Item>
+      <TodoModal
+      show={showModal}
+      item={item}
+      onClose={handleClose}
+      onEdit={onEdit}
+      onDelete={onDelete}
+    />
+    </div>
   );
 }
 

@@ -9,7 +9,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
     <div className="mb-3">
       <input
         className="form-control-lg"
-        style={{ fontFamily: "cursive", fontWeight: "bolder" }}
+        style={{ fontWeight: "bolder" }}
         placeholder="Add your things here... "
         size="lg"
         value={value}

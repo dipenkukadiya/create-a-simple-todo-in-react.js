@@ -6,6 +6,7 @@ import TodoModal from "./TodoModal";
 
 function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
   const [showModal, setShowModal] = useState(false);
+ 
 
   const handleEditClick = () => {
     // Toggle the modal when the "Edit" button is clicked

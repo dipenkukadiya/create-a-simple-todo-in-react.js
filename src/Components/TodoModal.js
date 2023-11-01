@@ -7,7 +7,7 @@ class TodoModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editedValue: this.props.item.value,
+      editedValue:props.item.value,
     };
   }
 
@@ -16,7 +16,10 @@ class TodoModal extends Component {
   };
 
   handleSave = () => {
-    this.props.onEdit(this.props.item.id, this.state.editedValue);
+    console.log("handleSave triggered");
+    console.log("Editing ID:", this.props.item.id);
+    console.log("Edited Value:", this.state.editedValue);
+    this.props.onEdit(this.props.item.id, this.props.state.editedValue);
     this.props.onClose();
   };
 
@@ -45,9 +48,9 @@ class TodoModal extends Component {
           <Button variant="primary" onClick={this.handleSave}>
             Save Changes
           </Button>
-          <Button variant="danger" onClick={this.handleDelete}>
+          {/* <Button variant="danger" onClick={this.handleDelete}>
             Delete
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     );

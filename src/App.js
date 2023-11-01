@@ -14,7 +14,7 @@ import { addTodo, getAllTodos } from "./Database/indexedDB";
 class App extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       userInput: "",
       list: [],
@@ -24,7 +24,7 @@ class App extends Component {
       deletingItemId: null,
     };
   }
-
+  
   updateInput(value) {
     this.setState({
       userInput: value,
@@ -34,8 +34,9 @@ class App extends Component {
     localStorage.setItem("todos", JSON.stringify(list));
     console.log("local storage updated :",list)
   };
+  
 
-
+  
   async addItem() {
     if (this.state.userInput !== "") {
       const userInput = {
@@ -101,7 +102,27 @@ class App extends Component {
 
     // Optionally, update your storage (e.g., IndexedDB or localStorage) here
   }
+  onEdit = (itemId, newValue) => {
+    // Update the item with the new value
+    console.log("on edit triggered");
+    console.log("Editing ID:", this.props.item.id);
+    console.log("Edited Value:", this.state.editedValue);
+    
+    const updatedList = this.state.list.map((item) => {
+      if (item.id === id) {
+        return { ...item, newValue };
+      }
+      return item;
+    });
   
+    this.setState({
+      list: updatedList,
+      isEditing: false, // Close the edit modal
+      editingItemId: null, // Clear the editing item
+    });
+  
+    this.updateLocalStorage(updatedList);
+  };
   confirmEdit() {
     const { editingItemId } = this.state;
     if (editingItemId) {
@@ -115,23 +136,7 @@ class App extends Component {
       editingItemId: null,
     });
   }
-  onEdit = (id, value) => {
-    // Update the item with the new value
-    const updatedList = this.state.list.map((item) => {
-      if (item.id === id) {
-        return { ...item, value };
-      }
-      return item;
-    });
-  
-    this.setState({
-      list: updatedList,
-      isEditing: false, // Close the edit modal
-      editingItemId: null, // Clear the editing item
-    });
-  
-    this.updateLocalStorage(updatedList);
-  };
+ 
   async componentDidMount() {
     try {
       const localStoragetodos = localStorage.getItem("todos");
@@ -189,7 +194,7 @@ class App extends Component {
                   key={item.id}
                   item={item}
                   onDelete={this.deleteItem.bind(this)}
-                  onEdit={(itemId) => this.editItem(itemId)}
+                  onEdit={(itemId, newValue) => this.onEdit(itemId,newValue)}
                   onCheckboxChange={(checked) =>
                     this.updateCheckbox(item.id, checked)
                   }
@@ -216,12 +221,14 @@ class App extends Component {
         </Modal>
       )}
      {this.state.isEditing && (
-  <TodoModal
-    show={this.state.isEditing}
-    onClose={this.closeEditModal.bind(this)}
-    item={this.state.list.find((item) => item.id === this.state.editingItemId)}
-    onEdit={(newValue) => this.onEdit(this.state.editingItemId, newValue)} // Pass the edit function
-  />
+      <TodoModal
+  show={this.state.isEditing}
+  onClose={this.closeEditModal.bind(this)}
+  item={this.state.list.find((item) => item.id === this.state.editingItemId)}
+  onEdit={(newValue) => this.onEdit(this.state.editingItemId, newValue)}
+/>
+
+
 )}
 
 

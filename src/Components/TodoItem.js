@@ -44,16 +44,22 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
 
         <div>
           <Button
-            style={{ marginRight: "10px" }}
+            style={{
+              marginRight: "10px",
+              textAlign: "left",
+              color: "chocolate",
+            }}
             variant="light"
             onClick={() => onDelete(item.id)}
           >
-            {" "}
-            Delete{" "}
+            Delete
           </Button>
-          <Button variant="light" onClick={handleEditClick}>
-            {" "}
-            Edit{" "}
+          <Button
+            style={{ marginLeft: "10px", color: "darkmagenta" }}
+            variant="light"
+            onClick={handleEditClick}
+          >
+            Edit
           </Button>
         </div>
       </ListGroup.Item>

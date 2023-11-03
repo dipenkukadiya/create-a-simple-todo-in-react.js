@@ -16,7 +16,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         aria-describedby="basic-addon2"
       />
       <InputGroup>
-        <Button variant="dark" className="mt-2" onClick={() => onAdd()}>
+        <Button variant="dark" className="mt-2" style={{fontWeight:"bold",color:"darkgoldenrod",backgroundColor:""}} onClick={() => onAdd()}>
           ADD THINGS
         </Button>
       </InputGroup>

@@ -158,11 +158,11 @@ class App extends Component {
             alignItems: "center",
             fontSize: "3rem",
             fontWeight: "bolder",
-            fontFamily: "revert-layer",
-            color: "darkslateblue",
+            fontFamily: "cursive",
+            color: "green",
           }}
         >
-          TODO THING'S
+        Todo Thing's
         </Row>
 
         <hr />

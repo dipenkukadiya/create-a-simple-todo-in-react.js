@@ -47,7 +47,8 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
             style={{
               marginRight: "10px",
               textAlign: "left",
-              color: "chocolate",
+              color: "red",
+             
             }}
             variant="light"
             onClick={() => onDelete(item.id)}
@@ -55,7 +56,7 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
             Delete
           </Button>
           <Button
-            style={{ marginLeft: "10px", color: "darkmagenta" }}
+            style={{ marginLeft: "10px", color: "blue" }}
             variant="light"
             onClick={handleEditClick}
           >

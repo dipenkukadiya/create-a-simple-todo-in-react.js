@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -11,6 +12,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
     if (isInputEmpty) {
       onAdd();
     } else {
+
       onAdd();
     }
   };
@@ -29,15 +31,18 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         aria-describedby="basic-addon2"
       />
       <InputGroup>
+
       <OverlayTrigger
           placement="right"
           overlay={isInputEmpty ? <Tooltip>Please enter a task before adding.</Tooltip> :<Tooltip>Click To Add.</Tooltip>}
         >
         <Button variant="dark" className="mt-2" style={{fontWeight:"bold",color:"darkgoldenrod",backgroundColor:""}} onClick={handleAddClick}>
+
           ADD THINGS
         </Button>
         </OverlayTrigger>
       </InputGroup>
+}
     </div>
   );
 };

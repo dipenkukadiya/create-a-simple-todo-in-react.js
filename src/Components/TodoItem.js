@@ -20,6 +20,7 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
         action
         style={{
           display: "flex",
+          alignItems:"center",
           justifyContent: "space-between",
           marginTop: "10px",
           textDecoration: item.checked ? "strike-through" : "none",
@@ -31,10 +32,11 @@ function TodoItem({ item, onDelete, onEdit, onCheckboxChange }) {
           type="checkbox"
           checked={item.checked}
           onChange={(e) => onCheckboxChange(e.target.checked)}
-          style={{ marginTop: "8px" }}
+          style={{ marginTop: "8px", marginRight:"20px"}}
         />
         <h5
           style={{
+            flex:"1",
             marginTop: "8px",
             textDecoration: item.checked ? "line-through" : "none",
           }}

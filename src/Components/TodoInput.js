@@ -42,7 +42,7 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         </Button>
         </OverlayTrigger>
       </InputGroup>
-}
+
     </div>
   );
 };

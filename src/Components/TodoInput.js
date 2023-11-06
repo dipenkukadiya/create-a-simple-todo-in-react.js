@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-// import ReactTooltip from "react-tooltip";
+
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
 const TodoInput = ({ value, onChange, onAdd }) => { 
-  const [showTooltip, setShowTooltip] = useState(false);
+   const isInputEmpty = value === "";
+
   const handleAddClick = () => {
-    if (value === "") {
-      setShowTooltip(true);
+    if (isInputEmpty) {
+      onAdd();
     } else {
-      setShowTooltip(false);
+
       onAdd();
     }
   };
@@ -27,11 +31,18 @@ const TodoInput = ({ value, onChange, onAdd }) => {
         aria-describedby="basic-addon2"
       />
       <InputGroup>
-        <Button variant="dark" className="mt-2" title="ADD A TASK" style={{fontWeight:"bold",color:"darkgoldenrod",backgroundColor:""}} onClick={handleAddClick}>
+
+      <OverlayTrigger
+          placement="right"
+          overlay={isInputEmpty ? <Tooltip>Please enter a task before adding.</Tooltip> :<Tooltip>Click To Add.</Tooltip>}
+        >
+        <Button variant="dark" className="mt-2" style={{fontWeight:"bold",color:"darkgoldenrod",backgroundColor:""}} onClick={handleAddClick}>
+
           ADD THINGS
         </Button>
+        </OverlayTrigger>
       </InputGroup>
-      {showTooltip && <div className="tooltip"><h1>Please enter a task before adding.</h1></div>}
+}
     </div>
   );
 };

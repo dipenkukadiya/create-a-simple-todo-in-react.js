@@ -36,6 +36,7 @@ class TodoModal extends Component {
         <Modal.Body>
           <input
             type="text"
+            maxLength={ "25"}
             value={this.state.editedValue}
             onChange={this.handleInputChange}
           />

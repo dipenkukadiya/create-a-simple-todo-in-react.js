@@ -162,7 +162,7 @@ class App extends Component {
             color: "green",
           }}
         >
-        Todo Thing's
+          Todo Thing's
         </Row>
 
         <hr />
